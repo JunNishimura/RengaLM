@@ -55,6 +55,9 @@ def train():
     # epochの定義
     epoch = 1
 
+    # 可視化の有無
+    isViz = True
+
     # checkpointの有無を確認
     checkpoint_dir = './checkpoints'
     if os.path.exists(checkpoint_dir) and len(os.listdir(checkpoint_dir)):
@@ -65,6 +68,7 @@ def train():
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         epoch = checkpoint['epoch']
         loss = checkpoint['loss']
+        isViz = False
     else:
         # checkpointディレクトリを作成
         os.makedirs(checkpoint_dir, exist_ok=True)
@@ -114,8 +118,9 @@ def train():
     torch.save(model.state_dict(), f'./checkpoints/final.pt')
 
     # 結果を可視化する
-    visualize_training(history, 'loss')
-    visualize_training(history, 'ppl')
+    if isViz:
+        visualize_training(history, 'loss')
+        visualize_training(history, 'ppl')
 
 if __name__ == '__main__':
     train()
