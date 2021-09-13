@@ -28,7 +28,7 @@ def generate():
     model = RengaModel(VOCAB_SIZE, EMBEDDING_DIM, HIDDEN_SIZE, NUM_LAYERS)
     
     # modelのload
-    model.load_state_dict(torch.load('../checkpoints/ckpt_20.pt')['model_state_dict'])
+    model.load_state_dict(torch.load('./checkpoints/ckpt_20.pt')['model_state_dict'])
     model.eval()
 
     # inference
@@ -38,7 +38,7 @@ def generate():
         for initial in initials:
             next_char = initial    
             states = model.initHidden(batch_size=1) # inference時のbatch sizeは1
-            ku = ''
+            ku = initial
 
             # 句の生成
             while True:
